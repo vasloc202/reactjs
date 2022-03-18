@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import { useEffect,useState } from 'react'
 import ShowInfo from "./components/showInfo";
 import { userInfo } from './type/user';
+import { get } from "./api/product";
 import './Index.css';
 import { Navigate, Routes, Route, NavLink  } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import ProductPage from './pages/ProductPage';
+import DetailProduct from "./pages/DetailProduct";
 import Dashboard from './pages/DashBoard';
 import WebsiteLayout from './pages/layouts/WebsiteLayout';
 import AdminLayout from './pages/layouts/AdminLayout';
@@ -30,6 +32,7 @@ function App() {
             <Route path="/" element={ <WebsiteLayout /> }>
               <Route index element={<HomePage />} />
               <Route path="products" element={<ProductPage />} />
+              <Route path="products/:id" element={<DetailProduct />}/>
             </Route>
             <Route path="admin" element={<AdminLayout />} >
               <Route index element={<Navigate to="/admin/dashboard" />} />
