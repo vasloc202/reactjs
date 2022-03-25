@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
 import { Navigate, Routes, Route, NavLink, Link } from "react-router-dom";
 import { ProductType } from "./type/ProductType";
-import { list, add } from "./api/product";
+import { list, add, remove } from "./api/product";
 import WebsiteLayout from "./pages/layouts/WebsiteLayout";
 import AdminLayout from "./pages/layouts/AdminLayout";
 import ProductPage from "./pages/ProductPage";
@@ -11,8 +11,11 @@ import HomePage from "./pages/HomePage";
 import Dashboard from "./pages/admin/Dashboard";
 import ProductDetail from "./pages/ProductDetail";
 import ProductAdd from "./pages/admin/ProductAdd";
+import ProductManager from "./pages/admin/ProductManager";
+import PrivateRouter from "./components/PrivateRouter";
 function App() {
   const [products, setProducts] = useState<ProductType[]>([]);
+  // get all products
   useEffect(() => {
     const getProducts = async () => {
       const { data } = await list();
@@ -20,11 +23,17 @@ function App() {
     };
     getProducts();
   }, []);
-
+  // add products
   const onHandleAdd = async (product: any) => {
     const { data } = await add(product);
     setProducts([...products, data]);
   };
+  // remove product
+  const onHandleRemove = async (id: number | string | undefined) => {
+    remove(id);
+    setProducts(products.filter((item) => item._id !== id));
+  };
+
   return (
     <div className="App container">
       <main>
@@ -38,9 +47,22 @@ function App() {
             <Route path="products/:id" element={<ProductDetail />} />
           </Route>
 
-          <Route path="admin" element={<AdminLayout />}>
+          <Route
+            path="admin"
+            element={
+              <PrivateRouter>
+                <AdminLayout />
+              </PrivateRouter>
+            }
+          >
             <Route index element={<Navigate to="dashboard" />} />
             <Route path="dashboard" element={<Dashboard />} />
+            <Route
+              path="products"
+              element={
+                <ProductManager products={products} onRemove={onHandleRemove} />
+              }
+            />
             <Route
               path="products/add"
               element={<ProductAdd onAdd={onHandleAdd} />}
