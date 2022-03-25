@@ -1,11 +1,11 @@
 import React from "react";
 import { ProductType } from "../type/ProductType";
-type ProductPageProps = { products: ProductType[] };
+type ProductPageProps = { product: ProductType[] };
 
 const ProductPage = (props: ProductPageProps) => {
   return (
     <div>
-      {props.products.map((item, index) => (
+      {props.product.map((item, index) => (
         <div className="card" style={{ width: "18rem" }} key={index}>
           <img src="..." className="card-img-top" alt="..." />
           <div className="card-body">

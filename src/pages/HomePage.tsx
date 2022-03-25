@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 
 import { ProductType } from "../type/ProductType";
 type HomePageProps = {
-  products: ProductType[];
+  product: ProductType[];
 };
 const HomePage = (props: HomePageProps) => {
   return (
     <div className="container">
-      {props.products.map((item, index) => (
+      {props.product.map((item, index) => (
         <div className="card" style={{ width: "18rem" }} key={index}>
           <img src="..." className="card-img-top" alt="..." />
           <div className="card-body">
