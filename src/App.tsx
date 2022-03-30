@@ -3,7 +3,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
 import { Navigate, Routes, Route, NavLink, Link } from "react-router-dom";
 import { ProductType } from "./type/ProductType";
-import { UserType } from "./type/UserType";
 import { list, add, remove } from "./api/product";
 import WebsiteLayout from "./pages/layouts/WebsiteLayout";
 import AdminLayout from "./pages/layouts/AdminLayout";
@@ -16,8 +15,12 @@ import ProductManager from "./pages/admin/ProductManager";
 import PrivateRouter from "./components/PrivateRouter";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import CategoriesManager from "./pages/admin/CategoriesManager";
+import { Categories } from "./type/Categories";
+import { getAll } from "./api/categories";
 function App() {
   const [products, setProducts] = useState<ProductType[]>([]);
+  const [categories, setCategories] = useState<Categories[]>([]);
   // get all products
   useEffect(() => {
     const getProducts = async () => {
@@ -30,12 +33,22 @@ function App() {
   const onHandleAdd = async (product: any) => {
     const { data } = await add(product);
     setProducts([...products, data]);
+    console.log(product);
+    
   };
   // remove product
   const onHandleRemove = async (id: number | string | undefined) => {
     remove(id);
     setProducts(products.filter((item) => item._id !== id));
   };
+
+  useEffect(() => {
+    const getCategories = async () => {
+      const { data } = await getAll();
+      setCategories(data);
+    }
+    getCategories();
+  })
   return (
     <div className="App container">
       <main>
@@ -71,6 +84,7 @@ function App() {
               path="products/add"
               element={<ProductAdd onAdd={onHandleAdd} />}
             />
+            <Route path="categories" element={<CategoriesManager categories={categories}/>}/>
           </Route>
         </Routes>
       </main>
