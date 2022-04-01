@@ -19,6 +19,10 @@ export const add = (product: ProductType) => {
     },
   });
 };
+export const update = (product: ProductType) => {
+  const url = `/products/${product._id}`;
+  return instance.put(url, product);
+}
 export const remove = (id: number | string | undefined) => {
   const url = `/products/${id}`;
   return instance.delete(url);

@@ -10,7 +10,7 @@ type Categories = {
 type Inputs = {
   name: string;
   price: number;
-  category: string;
+  category: string | number;
 };
 type ProductAddProps = {
   onAdd: (product: Inputs) => void;
@@ -31,7 +31,6 @@ const ProductAdd = (props: ProductAddProps) => {
   };
 // category
   const [categories, setCategories] = useState<Categories[]>([]);
-
   const getCategories = async () => {
     const { data } = await getAll();
     setCategories(data);

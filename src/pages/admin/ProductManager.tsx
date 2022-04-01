@@ -10,6 +10,7 @@ type ProductManagerProps = {
 const ProductManager = (props: ProductManagerProps) => {
   return (
     <div>
+      <Link to="/admin/products/add">Thêm sản phẩm</Link>
       <table className="table table-bordered">
         <tbody>
           {props.products.map((item, index) => (
@@ -18,8 +19,11 @@ const ProductManager = (props: ProductManagerProps) => {
               <td>{item.name}</td>
               <td>{item.price}</td>
               <td>
-                <Link to={`/admin/product/${item._id}/edit`}>Edit</Link>
-                <button onClick={() => props.onRemove(item._id)}>Remove</button>
+                <button className="btn btn-primary">
+                  <Link className="text-white text-decoration-none px-3" to={`/admin/products/${item._id}/edit`}>Edit</Link>
+                </button>
+                
+                <button className="btn btn-danger" onClick={() => props.onRemove(item._id)}>Remove</button>
               </td>
             </tr>
           ))}

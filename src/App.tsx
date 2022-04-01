@@ -1,9 +1,10 @@
 import "./App.css";
+import "./Index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
 import { Navigate, Routes, Route, NavLink, Link } from "react-router-dom";
 import { ProductType } from "./type/ProductType";
-import { list, add, remove } from "./api/product";
+import { list, add, remove, update } from "./api/product";
 import WebsiteLayout from "./pages/layouts/WebsiteLayout";
 import AdminLayout from "./pages/layouts/AdminLayout";
 import ProductPage from "./pages/ProductPage";
@@ -18,6 +19,7 @@ import RegisterPage from "./pages/RegisterPage";
 import CategoriesManager from "./pages/admin/CategoriesManager";
 import { Categories } from "./type/Categories";
 import { getAll } from "./api/categories";
+import ProductEdit from "./pages/admin/ProductEdit";
 function App() {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [categories, setCategories] = useState<Categories[]>([]);
@@ -33,22 +35,25 @@ function App() {
   const onHandleAdd = async (product: any) => {
     const { data } = await add(product);
     setProducts([...products, data]);
-    console.log(product);
-    
   };
   // remove product
   const onHandleRemove = async (id: number | string | undefined) => {
     remove(id);
     setProducts(products.filter((item) => item._id !== id));
   };
-
+  // edit product
+  const onHandleEdit = async (product: ProductType) => {
+    const { data } = await update(product);
+    setProducts( products.map((item)=> item._id == data.id ? data : item))
+  }
+  // list category
   useEffect(() => {
     const getCategories = async () => {
       const { data } = await getAll();
       setCategories(data);
     }
     getCategories();
-  })
+  }, []);
   return (
     <div className="App container">
       <main>
@@ -83,6 +88,10 @@ function App() {
             <Route
               path="products/add"
               element={<ProductAdd onAdd={onHandleAdd} />}
+            />
+            <Route
+              path="products/:id/edit"
+              element={<ProductEdit  onUpdate={onHandleEdit}/>}
             />
             <Route path="categories" element={<CategoriesManager categories={categories}/>}/>
           </Route>
