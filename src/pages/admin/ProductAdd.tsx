@@ -4,12 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { getAll } from "../../api/categories";
 // import { Categories } from "../../type/Categories";
 type Categories = {
-    _id: string,
-    name: string,
+  _id: string,
+  name: string,
 }
 type Inputs = {
   name: string;
   price: number;
+  desc: string;
   category: string | number;
 };
 type ProductAddProps = {
@@ -26,16 +27,16 @@ const ProductAdd = (props: ProductAddProps) => {
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<Inputs> = (dataInputs) => {
-    props.onAdd(dataInputs);    
+    props.onAdd(dataInputs);
     navigate("/admin/products");
   };
-// category
+  // category
   const [categories, setCategories] = useState<Categories[]>([]);
   const getCategories = async () => {
     const { data } = await getAll();
     setCategories(data);
   }
-  useEffect(() => {  
+  useEffect(() => {
     getCategories();
   }, []);
 
@@ -48,7 +49,13 @@ const ProductAdd = (props: ProductAddProps) => {
           {...register("price")}
           placeholder="Giá sản phẩm"
         /> <br />
+        <input
+          type="text"
+          {...register("desc")}
+          placeholder="Chi tiết sản phẩm"
+        /> <br />
         <select {...register("category")} >
+          <option selected disabled>Chọn danh mục</option>
           {
             categories.map((item) => {
               return (

@@ -1,6 +1,5 @@
 import "./App.css";
-import "./Index.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "./index.css";
 import { useEffect, useState } from "react";
 import { Navigate, Routes, Route, NavLink, Link } from "react-router-dom";
 import { ProductType } from "./type/ProductType";
@@ -16,10 +15,11 @@ import ProductManager from "./pages/admin/ProductManager";
 import PrivateRouter from "./components/PrivateRouter";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import CategoriesManager from "./pages/admin/CategoriesManager";
+import CategoriesManager from "./pages/admin/CategoryManager";
 import { Categories } from "./type/Categories";
-import { getAll } from "./api/categories";
+import { create, getAll } from "./api/categories";
 import ProductEdit from "./pages/admin/ProductEdit";
+import CategoriesAdd from "./pages/admin/CategoryAdd";
 function App() {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [categories, setCategories] = useState<Categories[]>([]);
@@ -44,7 +44,7 @@ function App() {
   // edit product
   const onHandleEdit = async (product: ProductType) => {
     const { data } = await update(product);
-    setProducts( products.map((item)=> item._id == data.id ? data : item))
+    setProducts(products.map((item) => item._id == data.id ? data : item))
   }
   // list category
   useEffect(() => {
@@ -54,10 +54,16 @@ function App() {
     }
     getCategories();
   }, []);
+  //add category
+  const onHandelAddCate = async (category: Categories) => {
+    const { data } = await create(category);
+    setCategories([...categories, data]);
+  }
   return (
-    <div className="App container">
+    <div className="App">
       <main>
         <Routes>
+
           <Route path="/" element={<WebsiteLayout />}>
             <Route index element={<HomePage product={products} />} />
             <Route
@@ -65,6 +71,9 @@ function App() {
               element={<ProductPage product={products} />}
             />
             <Route path="products/:id" element={<ProductDetail />} />
+          </Route>
+
+          <Route path="/">
             <Route path="signin" element={<LoginPage />} />
             <Route path="signup" element={<RegisterPage />} />
           </Route>
@@ -91,9 +100,10 @@ function App() {
             />
             <Route
               path="products/:id/edit"
-              element={<ProductEdit  onUpdate={onHandleEdit}/>}
+              element={<ProductEdit onUpdate={onHandleEdit} />}
             />
-            <Route path="categories" element={<CategoriesManager categories={categories}/>}/>
+            <Route path="categories" element={<CategoriesManager categories={categories} />} />
+            <Route path="categories/add" element={<CategoriesAdd onAddCate={onHandelAddCate} />} />
           </Route>
         </Routes>
       </main>

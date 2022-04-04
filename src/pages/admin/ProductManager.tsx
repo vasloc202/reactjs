@@ -11,19 +11,30 @@ const ProductManager = (props: ProductManagerProps) => {
   return (
     <div>
       <Link to="/admin/products/add">Thêm sản phẩm</Link>
-      <table className="table table-bordered">
+      <table className=" container table border border-gray-500">
+        <thead className="border border-gray-500">
+          <tr>
+            <th>ID</th>
+            <th>Id Danh Mục</th>
+            <th>Tên</th>
+            <th>Giá</th>
+            <th>Chi tiết</th>
+            <th>Action</th>
+          </tr>
+        </thead>
         <tbody>
           {props.products.map((item, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
+              <td>{item.category}</td>
               <td>{item.name}</td>
               <td>{item.price}</td>
+              <td>{item.desc}</td>
               <td>
                 <button className="btn btn-primary">
-                  <Link className="text-white text-decoration-none px-3" to={`/admin/products/${item._id}/edit`}>Edit</Link>
+                  <Link className="text-blue text-decoration-none px-3 hover:text-sky-500" to={`/admin/products/${item._id}/edit`}>Edit</Link>
                 </button>
-                
-                <button className="btn btn-danger" onClick={() => props.onRemove(item._id)}>Remove</button>
+                <button className="bg: bg-sky-500 text-white" onClick={() => props.onRemove(item._id)}>Remove</button>
               </td>
             </tr>
           ))}
