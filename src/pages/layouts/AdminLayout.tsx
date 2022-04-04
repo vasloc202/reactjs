@@ -1,19 +1,17 @@
 import React from 'react'
 import { Outlet } from "react-router-dom";
+import AdminNav from '../../components/AdminNav';
 type Props = {}
 
 const AdminLayout = (props: Props) => {
   return (
     <div>
-        <header>
-            Header website admin
-        </header>
-        <main>
-            <Outlet />
-        </main>
-        <footer>
-            Footer
-        </footer>
+      <header>
+        <AdminNav />
+      </header>
+      <main>
+        <Outlet />
+      </main>
     </div>
   )
 }

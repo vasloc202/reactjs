@@ -32,11 +32,11 @@ const ProductAdd = (props: ProductAddProps) => {
   };
   // category
   const [categories, setCategories] = useState<Categories[]>([]);
-  const getCategories = async () => {
-    const { data } = await getAll();
-    setCategories(data);
-  }
   useEffect(() => {
+    const getCategories = async () => {
+      const { data } = await getAll();
+      setCategories(data);
+    }
     getCategories();
   }, []);
 

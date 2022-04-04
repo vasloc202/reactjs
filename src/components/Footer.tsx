@@ -68,8 +68,7 @@ const Footer = (props: Props) => {
                                 Donna karan new York
                             </h6>
                             <p>
-                                Here you can use rows and columns to organize your footer content. Lorem ipsum dolor
-                                sit amet, consectetur adipisicing elit.
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, quasi. Dolorum dolorem, at vel repellendus magni libero voluptatem necessitatibus, laudantium repellat quidem amet mollitia recusandae, officiis quasi et nemo dolor.
                             </p>
                         </div>
                         <div>

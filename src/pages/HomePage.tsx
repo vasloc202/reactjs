@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getAll } from "../api/categories";
+import Banner from "../components/Banner";
 import { Categories } from "../type/Categories";
 import { ProductType } from "../type/ProductType";
 
@@ -21,6 +22,9 @@ const HomePage = (props: HomePageProps) => {
 
   return (
     <>
+      <div>
+        <Banner />
+      </div>
       <h2 className="h-20 w-full py-5 text-3xl font-extrabold tracking-tight text-gray-900 text-center">Sản phẩm</h2>
       <div className="container flex justify-start px-32">
         {props.product.map((item, index) => (
@@ -34,7 +38,7 @@ const HomePage = (props: HomePageProps) => {
                   <div className="w-64 mt-4 block text-center">
                     <h3 className="text-2xl text-gray-700 ">
                       <Link to={`/products/${item._id}`}>
-                        <span aria-hidden="true" className="absolute inset-0" />
+                        <span aria-hidden="true" className="inset-0" />
                         {item.name}
                       </Link>
                     </h3>
