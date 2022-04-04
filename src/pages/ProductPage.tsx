@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { searchProduct } from "../api/seacrh";
 import { ProductType } from "../type/ProductType";
 type ProductPageProps = { product: ProductType[] };
 
 const ProductPage = (props: ProductPageProps) => {
+  const [inputSearch, setInputSearch] = useState<string>("");
+  const search = async () => {
+    const { data } = await searchProduct(inputSearch);
+    console.log(data);
+  }
   return (
     <>
       <h2 className="h-20 w-full py-5 text-3xl font-extrabold tracking-tight text-gray-900 text-center">Sản phẩm</h2>
+
+      <form action="">
+        <input type="text" onChange={(e) => setInputSearch(e.target.value)} placeholder="Nhập tên sản phẩm" />
+        <button type="button" onClick={() => search()} >Tìm kiếm</button>
+      </form>
+
       <div className="container flex justify-start px-32">
         {props.product.map((item, index) => (
           <div className="flex justify-between" key={index}>

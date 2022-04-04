@@ -20,10 +20,18 @@ export const add = (product: ProductType) => {
   });
 };
 export const update = (product: ProductType) => {
-  const url = `/products/${product._id}`;
-  return instance.put(url, product);
+  const url = `/products/${product._id}/${users.user._id}`;
+  return instance.put(url, product, {
+    headers: {
+      Authorization: `Bearer ${users.token}`,
+    },
+  });
 }
 export const remove = (id: number | string | undefined) => {
   const url = `/products/${id}`;
-  return instance.delete(url);
+  return instance.delete(url, {
+    headers: {
+      Authorization: `Bearer ${users.token}`,
+    },
+  });
 };

@@ -44,7 +44,7 @@ function App() {
   // edit product
   const onHandleEdit = async (product: ProductType) => {
     const { data } = await update(product);
-    setProducts(products.map((item) => item._id == data.id ? data : item))
+    setProducts(products.map((item) => item._id == data._id ? data : item))
   }
   // list category
   useEffect(() => {
