@@ -20,6 +20,7 @@ import { Categories } from "./type/Categories";
 import { create, getAll } from "./api/categories";
 import ProductEdit from "./pages/admin/ProductEdit";
 import CategoriesAdd from "./pages/admin/CategoryAdd";
+import CartPage from "./pages/CartPage";
 function App() {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [categories, setCategories] = useState<Categories[]>([]);
@@ -72,6 +73,8 @@ function App() {
             />
             <Route path="products/:id" element={<ProductDetail />} />
           </Route>
+
+          <Route path="cart" element={<CartPage />} />
 
           <Route path="/">
             <Route path="signin" element={<LoginPage />} />
