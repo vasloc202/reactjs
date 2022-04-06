@@ -1,6 +1,6 @@
 import instance from "./instance";
 
-export const searchProduct = (search_value: any) => {
-    const url = `/search?q=${search_value}`;
+export const searchProduct = (data: any) => {
+    const url = `/search?q=${data}`;
     return instance.get(url);
 }

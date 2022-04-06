@@ -3,8 +3,8 @@ import { ProductType } from "../type/ProductType";
 import { isAuthenticate } from "../utils/localStorage";
 let users = isAuthenticate();
 
-export const list = () => {
-  const url = `/products`;
+export const list = (page: number | undefined, perpage: number | undefined) => {
+  const url = `/products?perPage=${perpage}&page=${page}`;
   return instance.get(url);
 };
 export const getOne = (id: number | string | undefined) => {
@@ -28,7 +28,7 @@ export const update = (product: ProductType) => {
   });
 }
 export const remove = (id: number | string | undefined) => {
-  const url = `/products/${id}`;
+  const url = `/products/${id}/${users.user._id}`;
   return instance.delete(url, {
     headers: {
       Authorization: `Bearer ${users.token}`,

@@ -28,7 +28,7 @@ const ProductAdd = (props: ProductAddProps) => {
 
   const onSubmit: SubmitHandler<Inputs> = (dataInputs) => {
     props.onAdd(dataInputs);
-    navigate("/admin/products");
+    // navigate("/admin/products");
   };
   // category
   const [categories, setCategories] = useState<Categories[]>([]);

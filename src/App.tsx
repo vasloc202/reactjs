@@ -25,13 +25,7 @@ function App() {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [categories, setCategories] = useState<Categories[]>([]);
   // get all products
-  useEffect(() => {
-    const getProducts = async () => {
-      const { data } = await list();
-      setProducts(data);
-    };
-    getProducts();
-  }, []);
+
   // add products
   const onHandleAdd = async (product: any) => {
     const { data } = await add(product);
@@ -69,7 +63,7 @@ function App() {
             <Route index element={<HomePage product={products} />} />
             <Route
               path="products"
-              element={<ProductPage product={products} />}
+              element={<ProductPage />}
             />
             <Route path="products/:id" element={<ProductDetail />} />
           </Route>
