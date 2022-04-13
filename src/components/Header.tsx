@@ -1,9 +1,12 @@
 import logo from "../img/main-logo.png";
-import { RiSearchLine } from "react-icons/ri";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-type Props = {};
-const Header = (props: Props) => {
+const Header = () => {
+  let users;
+  if (localStorage.getItem('user')) {
+    users = JSON.parse(localStorage.getItem('user') || "");
+  }
   const navigate = useNavigate();
   const handleLogout = () => {
     if (localStorage.getItem("user")) {
@@ -13,24 +16,32 @@ const Header = (props: Props) => {
   };
   return (
     <div>
-      <div className="w-full h-auto bg-[#1e1e27]">
+      <div className="w-full h-auto bg-[#1e1e27] flex justify-between items-center" >
         <div className="text-[#acacac] w-5/6 m-auto h-14 flex justify-between items-center">
           <div className="w-2/4 h-full flex items-center text-sm text font-bold">
             GIAO HÀNG MIỄN PHÍ TRÊN TOÀN QUỐC KHI MUA 5 SẢN PHẨM TRỞ LÊN !
           </div>
           <div className="w-2/4 h-full flex justify-end items-center text-sm font-bold">
-            {localStorage.getItem("user") ? (
-              <div onClick={() => handleLogout()}>
-                <Link to={"/"}>Đăng xuất</Link>
+            <span className="px-3">{users ? users.user.role === 1 ? <div className="flex flex-col">
+              <div>
+                Xin chào {users.user.name}
               </div>
+              <div>
+                <Link to={"/admin"}>Quản trị</Link>
+              </div>
+            </div> : <div>{users.user.name}</div> : null}</span>
+            {users ? (
+              <div>
+                <div onClick={() => handleLogout()}>
+                  <Link to={"/"}>Đăng xuất</Link>
+                </div>
+              </div>
+
             ) : (
               <div className="flex">
                 <div className="mr-4">
                   <Link to="/signin">
                     <div className="flex">
-                      <div className="mt-1 mr-2">
-                        <div />
-                      </div>
                       <div>Đăng nhập</div>
                     </div>
                   </Link>
@@ -45,9 +56,9 @@ const Header = (props: Props) => {
       </div>
       <div className="container-fluid flex justify-between items-center px-40">
         <div>
-          <a href="/">
+          <Link to="/">
             <img src={logo} alt="" className="h-28" />
-          </a>
+          </Link>
         </div>
         <div className="flex justify-between items-center">
           <div className="nav__menu flex ">
@@ -80,8 +91,10 @@ const Header = (props: Props) => {
               </li>
             </ul>
           </div>
-          <div className="nav__icon">
-            <RiSearchLine />
+          <div className="nav__icon" >
+            <Link to="/cart" className="text-3xl" >
+              <AiOutlineShoppingCart />
+            </Link>
           </div>
         </div>
       </div>

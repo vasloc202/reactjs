@@ -6,6 +6,7 @@ type ProductDetailProps = {
 };
 const ProductDetail = (props: ProductDetailProps) => {
   const [detailProduct, setDetailProduct] = useState<ProductType>();
+  const [count, setCount] = useState<number>(1);
   const { id } = useParams();
   // call api
   const handleProduct = async () => {
@@ -19,6 +20,27 @@ const ProductDetail = (props: ProductDetailProps) => {
       handleProduct();
     }
   }, [id]);
+  // add to cart
+  let cart: any = [];
+  if (localStorage.getItem("cart")) {
+    cart = JSON.parse(localStorage.getItem("cart") || "");
+  }
+  const handleAddToCart = () => {
+    const carts = {
+      id: detailProduct?._id,
+      name: detailProduct?.name,
+      price: detailProduct?.price,
+    };
+    cart.push(carts);
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }
+  // increase & deincrease product
+  const pre = () => {
+    setCount(count - 1);
+  }
+  const next = () => {
+    setCount(count + 1)
+  }
   return (
     <div>
       <div className="bg-white">
@@ -64,9 +86,13 @@ const ProductDetail = (props: ProductDetailProps) => {
             <div className="mt-4 lg:mt-0 lg:row-span-3">
               <h2 className="sr-only">Product information</h2>
               <p className="text-3xl text-gray-900">{new Intl.NumberFormat("VND", { style: "currency", currency: "VND" }).format(detailProduct?.price)}</p>
-              <form className="mt-10">
-                <button className="mt-10 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Add to cart</button>
-              </form>
+              <div className="flex justify-center items-center py-5 w-full ">
+                <button className="px-5 py-1 bg-[#b9b4c7]" onClick={() => pre()}>-</button>
+                <input type="number" className="px-4 text-center" value={count} />
+                <button className="px-5 py-1 bg-[#b9b4c7]" onClick={() => next()}>+</button>
+              </div>
+
+              <button onClick={() => handleAddToCart()} className="mt-5 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Add to cart</button>
             </div>
             <div className="py-10 lg:pt-6 lg:pb-16 lg:col-start-1 lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
               {/* Description and details */}

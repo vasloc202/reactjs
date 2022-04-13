@@ -7,12 +7,10 @@ type PrivateRouterProps = {
 };
 
 const PrivateRouter = (props: PrivateRouterProps) => {
-  const {
-    user: {role}
-  } = isAuthenticate();
+  const { user: { role } } = isAuthenticate();
   if (!role) {
     return <Navigate to="/" />;
-  } 
+  }
   return props.children;
 };
 

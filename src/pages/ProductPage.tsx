@@ -10,26 +10,29 @@ const ProductPage = (props: ProductPageProps) => {
   const [input, setInput] = useState<string>("");
   const [products, setProducts] = useState<ProductType[]>([]);
   const [searchName, searchNameValue] = useState<ProductType[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [perPage, setPerPage] = useState<number>(8);
+  const [count, setCount] = useState<number>();
 
-  const getProducts = async () => {
-    const { data } = await list();
-    setProducts(data);
-  }
+
+
   const getSearch = async () => {
     const { data } = await searchProduct(input);
     searchNameValue(data);
     setProducts([]);
   }
-  console.log(searchName);
-
   useEffect(() => {
     if (!input) {
+      const getProducts = async () => {
+        const { data } = await list(page, perPage);
+        setProducts(data[0].value);
+        setCount(Math.ceil(data[1].value / perPage));
+      };
       getProducts();
     } else {
       getSearch();
     }
-  }, [input])
-
+  }, [input, page])
   return (
     <div>
       <h2 className="h-20 w-full py-5 text-3xl font-extrabold tracking-tight text-gray-900 text-center">Sản phẩm</h2>
@@ -73,6 +76,27 @@ const ProductPage = (props: ProductPageProps) => {
         ))
         }
       </div>
+      <div className="flex justify-center  ">
+        <button className="block p-4 bg-blue-500" onClick={() => {
+          if (page != 1) {
+            setPage(page - 1);
+          } else {
+            setPage(1);
+          }
+        }
+        }>
+          Giảm
+        </button>
+        <button className="block p-4 bg-blue-500" onClick={() => {
+          if (count != page) {
+            setPage(page + 1);
+          } else {
+            setPage(page);
+          }
+        }}>
+          Tăng
+        </button>
+      </div>
       <div className="container flex justify-start px-32">
         {searchName.map((item, index) => (
           <div className="flex justify-start" key={index}>
@@ -102,7 +126,6 @@ const ProductPage = (props: ProductPageProps) => {
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         ))

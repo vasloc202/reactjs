@@ -19,3 +19,8 @@ export const getAll = () => {
     const url = "/categories";
     return instance.get(url);
 }
+
+export const read = (id: any) => {
+    const url = `/categories/${id}`
+    return instance.get(url);
+}

@@ -16,11 +16,8 @@ const LoginPage = () => {
 
   const onSubmit: SubmitHandler<UserType> = async (data) => {
     const { data: user } = await signin(data);
-    console.log(user);
-
-    authenticated(user, () => {
-      navigate("/");
-    });
+    localStorage.setItem('user', JSON.stringify(user));
+    navigate("/");
   };
 
   return (

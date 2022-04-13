@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getAll } from "../api/categories";
+import { getAll, read } from "../api/categories";
 import { list } from "../api/product";
 import Banner from "../components/Banner";
 import { Categories } from "../type/Categories";
@@ -34,14 +34,35 @@ const HomePage = (props: HomePageProps) => {
   useEffect(() => {
     getCategories();
   }, []);
-
+  // list product in category
+  const clickCategory = async (id: any) => {
+    const { data } = await read(id)
+    setCategories(data);
+  }
 
   return (
-    <>
+    <div>
       <div>
         <Banner />
       </div>
-      <h2 className="h-20 w-full py-5 text-3xl font-extrabold tracking-tight text-gray-900 text-center">Sản phẩm</h2>
+      <div>
+        <div className="w-full h-auto my-16">
+          <div className="text-white w-5/6 m-auto h-auto">
+            <div className="m-auto text-black text-4xl font-semibold title">SẢN PHẨM</div>
+            <div className="bg-red-500 w-36 h-1 m-auto mt-2 mb-3"></div>
+            <div className="text-black h-auto m-auto mt-7 cursor-pointer flex" style={{ width: '500px' }}>
+              <div style={{ border: '1px solid gray', borderTopLeftRadius: '5px' }} className="text bg-red-500 text font-bold text-white w-36 h-10 flex items-center justify-center">
+                TẤT CẢ
+              </div>
+              {categories.map(item => (
+                <div onClick={() => clickCategory(item._id)} key={item._id} style={{ border: '1px solid gray' }} className="text w-36 font-bold h-10 flex items-center justify-center">
+                  {item.name}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="container grid grid-cols-4 px-32">
         {products.map((item, index) => (
           <div className="" key={index}>
@@ -71,6 +92,7 @@ const HomePage = (props: HomePageProps) => {
                   Chi tiết
                 </Link>
               </div>
+
             </div>
           </div>
         ))
@@ -98,7 +120,7 @@ const HomePage = (props: HomePageProps) => {
         </button>
       </div>
 
-    </>
+    </div>
   );
 };
 
