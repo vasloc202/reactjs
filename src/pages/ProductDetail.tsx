@@ -85,7 +85,7 @@ const ProductDetail = (props: ProductDetailProps) => {
             {/* Options */}
             <div className="mt-4 lg:mt-0 lg:row-span-3">
               <h2 className="sr-only">Product information</h2>
-              <p className="text-3xl text-gray-900">{new Intl.NumberFormat("VND", { style: "currency", currency: "VND" }).format(detailProduct?.price)}</p>
+              <p className="text-3xl text-gray-900">{detailProduct?.price}</p>
               <div className="flex justify-center items-center py-5 w-full ">
                 <button className="px-5 py-1 bg-[#b9b4c7]" onClick={() => pre()}>-</button>
                 <input type="number" className="px-4 text-center" value={count} />

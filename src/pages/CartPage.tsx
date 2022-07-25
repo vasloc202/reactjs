@@ -23,7 +23,7 @@ const CartPage = (props: Props) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {cart.map((item, index) => (
+                            {cart.map((item: any, index: any) => (
                                 <tr key={index}>
                                     <td className="px-6 py-4 whitespace-nowrap">{item.name}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">{item.price}</td>

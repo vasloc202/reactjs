@@ -51,8 +51,8 @@ function App() {
   }, []);
   //add category
   const onHandelAddCate = async (category: Categories) => {
-    const { data } = await create(category);
-    setCategories([...categories, data]);
+    const cate: any = await create(category);
+    setCategories([...categories, cate]);
   }
   return (
     <div className="App">
